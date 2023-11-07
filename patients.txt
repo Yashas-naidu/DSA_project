@@ -1,2 +1,1 @@
 552|john|19|male|mg|road
-422|alex|22|male|whitefiels|123

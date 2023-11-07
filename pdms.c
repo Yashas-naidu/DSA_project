@@ -25,6 +25,8 @@ struct Patient* createPatient(char name[], int age, char gender[], char address[
     return newPatient;
 }
 
+void savePatientsToFile(struct Patient* head);
+
 void addPatient(struct Patient** head, struct Patient* newPatient) {
     if (*head == NULL) {
         *head = newPatient;
@@ -36,28 +38,10 @@ void addPatient(struct Patient** head, struct Patient* newPatient) {
         current->next = newPatient;
     }
     printf("Patient added successfully. ID: %03d\n", newPatient->id);
+    savePatientsToFile(*head);
 }
 
-void displayPatients(struct Patient* head) {
-    if (head == NULL) {
-        printf("No patients in the database.\n");
-    } else {
-        struct Patient* current = head;
-        printf("Patient Database:\n");
-        while (current != NULL) {
-            printf("ID: %03d\n", current->id);
-            printf("Name: %s\n", current->name);
-            printf("Age: %d\n", current->age);
-            printf("Gender: %s\n", current->gender);
-            printf("Address: %s\n", current->address);
-            printf("Phone: %s\n", current->phone);
-            printf("------------------------\n");
-            current = current->next;
-        }
-    }
-}
-
-void writePatientsToFile(struct Patient* head) {
+void savePatientsToFile(struct Patient* head) {
     FILE* file = fopen("patients.txt", "w");
     if (file == NULL) {
         printf("Error opening file.\n");
@@ -152,6 +136,8 @@ void deletePatient(struct Patient** head, int id) {
         }
         if (!found) {
             printf("Patient not found.\n");
+        } else {
+            savePatientsToFile(*head); // Update the file after deleting the patient
         }
     }
 }
@@ -167,11 +153,9 @@ int main() {
     do {
         printf("Patient Database Management\n");
         printf("1. Add Patient\n");
-        printf("2. Display Patients\n");
-        printf("3. Search Patient\n");
-        printf("4. Delete Patient\n");
-        printf("5. Save Patients\n");
-        printf("6. Exit\n");
+        printf("2. Search Patient\n");
+        printf("3. Delete Patient\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         
@@ -200,28 +184,20 @@ int main() {
                 break;
             }
             case 2: {
-                displayPatients(head);
-                break;
-            }
-            case 3: {
                 int id;
                 printf("Enter the ID of the patient to search: ");
                 scanf("%d", &id);
                 searchPatient(head, id);
                 break;
             }
-            case 4: {
+            case 3: {
                 int id;
                 printf("Enter the ID of the patient to delete: ");
                 scanf("%d", &id);
                 deletePatient(&head, id);
                 break;
             }
-            case 5: {
-                writePatientsToFile(head);
-                break;
-            }
-            case 6: {
+            case 4: {
                 printf("Exiting...\n");
                 break;
             }
@@ -230,7 +206,9 @@ int main() {
                 break;
             }
         }
-    } while (choice != 6);
+    } while (choice != 4);
+    
+    savePatientsToFile(head); // Save patient data to file before exiting
     
     return 0;
 }
