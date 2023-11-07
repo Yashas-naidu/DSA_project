@@ -1,0 +1,28 @@
+ID: 358
+Name: stark
+Age: 12
+Gender: nan
+Address: 123
+Phone: 123
+
+Lab Report:
+**************************************
+* Disease:   nash
+* Medication: postfetol
+* Lab Tests: nan
+**************************************
+
+ID: 773
+Name: elon
+Age: 12
+Gender: male
+Address: california
+Phone: 1234567890
+
+Lab Report:
+**************************************
+* Disease:   pedo
+* Medication: ass
+* Lab Tests: nan
+**************************************
+
